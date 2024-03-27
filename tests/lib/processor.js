@@ -755,6 +755,17 @@ describe("processor", () => {
             });
         });
 
+        it.only("should support empty code blocks", () => {
+            const empty = [
+                '```javascript',
+                '```',
+            ].join('\n');
+            processor.preprocess(empty, 'empty.md');
+            const message = { message: 'Empty file', ruleId: null, line: 2 };
+            const result = processor.postprocess([[message]], 'empty.md');
+
+            assert.strictEqual(result[0].line, 2);
+        });
     });
 
     describe("supportsAutofix", () => {
